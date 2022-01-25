@@ -1,0 +1,25 @@
+@startuml
+
+title Classes - Gestão de progresso do aluno
+
+
+class Eleitor {
+  +Uuid AlunoId
+  +Uuid CursoId
+  +ProgressoEnum Progresso
+}
+
+class Candidato {
+  +Uuid AlunoId
+  +Uuid ModuloId
+  +ProgressoEnum Progresso
+}
+
+class ProgressoAulas {
+  +Uuid AlunoId
+  +Uuid AulaId
+  +ProgressoEnum Progresso
+}
+
+
+@enduml

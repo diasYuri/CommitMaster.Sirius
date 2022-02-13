@@ -2,11 +2,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CommitMaster.Contracts.Events.v1;
+using CommitMaster.Contracts.Mensageria;
 using CommitMaster.Sirius.App.Commands.v1.AlunoUseCases;
-using CommitMaster.Sirius.App.Events.v1.AlunoUseCases;
 using CommitMaster.Sirius.App.Responses.v1;
 using CommitMaster.Sirius.App.Responses.v1.AlunoUseCases;
-using CommitMaster.Sirius.Domain.Contracts.v1.Mensageria;
 using CommitMaster.Sirius.Domain.Entities;
 using CommitMaster.Sirius.Infra.Data;
 using MediatR;
@@ -56,7 +56,7 @@ namespace CommitMaster.Sirius.App.Handlers.CommandHandlers.v1.AlunoUseCases
             
             var sucessoAoAdicionaAssinatura = aluno.AdicionaAssinatura(new Assinatura(aluno, plano));
             if (!sucessoAoAdicionaAssinatura) {
-                return VerificarAssinatura(aluno);
+                return ErroCommand<AssinarPlanoCommandResponse>("Aluno já possui uma assinatura", "Verifique o estado da sua assinatura");
             }
             
             _appContext.Alunos.Update(aluno);

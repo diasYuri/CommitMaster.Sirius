@@ -38,6 +38,7 @@ namespace CommitMaster.Sirius.Infra.Data.Mapping
 
             builder.HasOne(a => a.Assinatura)
                 .WithOne(a => a.Aluno)
+                .HasForeignKey<Aluno>(p => p.AssinaturaId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.Property(a => a.CreatedAt)

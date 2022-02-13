@@ -25,7 +25,7 @@ namespace CommitMaster.Sirius.Domain.Utils
             if (value == null || string.IsNullOrEmpty(value.ToString()))
                 return false;
 
-            return value.ToString()!.Any(i => !char.IsDigit(i));
+            return value.ToString()!.All(i => char.IsDigit(i));
         }
     }
 }

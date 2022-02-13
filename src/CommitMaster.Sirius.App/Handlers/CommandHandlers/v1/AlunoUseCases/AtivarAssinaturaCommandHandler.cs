@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CommitMaster.Contracts.Events.v1;
 using CommitMaster.Sirius.App.Commands.v1.AlunoUseCases;
-using CommitMaster.Sirius.App.Events.v1.AlunoUseCases;
 using CommitMaster.Sirius.App.Responses.v1;
 using CommitMaster.Sirius.App.Responses.v1.AlunoUseCases;
 using CommitMaster.Sirius.Infra.Data;
@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore;
 namespace CommitMaster.Sirius.App.Handlers.CommandHandlers.v1.AlunoUseCases
 {
     public class AtivarAssinaturaCommandHandler : 
-        HandlerResponseBase
-        //IRequestHandler<AtivarAssinaturaCommand, HandlerResponse<AtivarAssinaturaCommandResponse>>
+        HandlerResponseBase,
+        IRequestHandler<AtivarAssinaturaCommand, HandlerResponse<AtivarAssinaturaCommandResponse>>
     {
         private readonly SiriusAppContext _appContext;
         private readonly IMediator _mediator;

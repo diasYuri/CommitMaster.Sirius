@@ -20,7 +20,6 @@ namespace CommitMaster.Sirius.App.Commands.v1.AlunoUseCases
         
         [Required(ErrorMessage = "O Campo Cpf é obrigatório")]
         [CpfValidation.CustomValidationCPFAttribute(ErrorMessage = "O cpf é inválido")]
-        [IsNumber(ErrorMessage = "O cpf deve conter apenas números")]
         public string Cpf { get; set; }
         
         [Required(ErrorMessage = "O Telefone é obrigatório")]

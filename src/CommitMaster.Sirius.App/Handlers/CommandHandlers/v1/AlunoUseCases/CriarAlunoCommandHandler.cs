@@ -1,10 +1,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using CommitMaster.Contracts.Events.v1;
 using CommitMaster.Sirius.App.Commands.v1.AlunoUseCases;
-using CommitMaster.Sirius.App.Events.v1.AlunoUseCases;
 using CommitMaster.Sirius.App.Responses.v1;
 using CommitMaster.Sirius.App.Responses.v1.AlunoUseCases;
+using CommitMaster.Sirius.App.UseCases.v1.CriarUsuario;
 using CommitMaster.Sirius.Domain.Entities;
 using CommitMaster.Sirius.Infra.Data;
 using MediatR;
@@ -54,7 +55,16 @@ namespace CommitMaster.Sirius.App.Handlers.CommandHandlers.v1.AlunoUseCases
                 return ErroInterno<CriarAlunoCommandResponse>();
             }
             
-            //TODO - Criar usuário
+            
+            var command = new CriarUsuarioCommand {
+                Nome = request.Nome,
+                Senha = request.Senha,
+                AlunoId = aluno.Id,
+                Email = request.Email,
+                DataCriacao = DateTime.UtcNow
+            };
+
+            _ = await _mediator.Send(command, cancellationToken);
             
             
             //Notify

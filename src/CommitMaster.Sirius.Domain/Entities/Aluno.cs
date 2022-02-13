@@ -10,7 +10,8 @@ namespace CommitMaster.Sirius.Domain.Entities
         public DateTime DataAniversario { get; private set; }
         public Cpf Cpf { get; private set; }
         public Telefone Telefone { get; private set; }
-        public Guid AssinaturaId { get; private set; }
+       
+        public Guid? AssinaturaId { get; private set; }
         public Assinatura Assinatura { get; private set; }
 
         
@@ -28,7 +29,7 @@ namespace CommitMaster.Sirius.Domain.Entities
 
         public bool AdicionaAssinatura(Assinatura assinatura)
         {
-            if (AssinaturaId == Guid.Empty || (Assinatura != null && Assinatura.Invalida())) {
+            if (AssinaturaId == null || AssinaturaId == Guid.Empty || (Assinatura != null && Assinatura.Invalida())) {
                 Assinatura = assinatura;
                 AssinaturaId = assinatura.Id;
                 return true;

@@ -16,9 +16,6 @@ namespace CommitMaster.Sirius.App.Commands.v1.AlunoUseCases
         
         [Required(ErrorMessage = "O Campo AssinaturaId é obrigatório")]
         public Guid PlanoId { get; set; }
-        
-        [Required(ErrorMessage = "O Campo Valor é obrigatório")]
-        public decimal Valor { get; set; }
 
         [Required]
         public DadoPagamento DadoPagamento { get; set; }

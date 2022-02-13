@@ -23,8 +23,6 @@ namespace CommitMaster.Sirius.Domain.Entities
 
         public Assinatura(Aluno aluno, Plano plano)
         {
-            Plano = plano;
-            Aluno = aluno;
             AlunoId = aluno.Id;
             PlanId = plano.Id;
 

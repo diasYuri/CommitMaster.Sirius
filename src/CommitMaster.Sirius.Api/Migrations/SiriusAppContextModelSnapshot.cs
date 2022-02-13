@@ -25,6 +25,9 @@ namespace CommitMaster.Sirius.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("AssinaturaId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
@@ -33,15 +36,55 @@ namespace CommitMaster.Sirius.Api.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(200)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Alunos");
+                });
+
+            modelBuilder.Entity("CommitMaster.Sirius.Domain.Entities.Assinatura", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AlunoId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Ativa")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("DataExpiracao")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("EstadoAssinatura")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("PlanId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("PlanoId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlunoId")
+                        .IsUnique();
+
+                    b.HasIndex("PlanoId");
+
+                    b.ToTable("Assinaturas");
                 });
 
             modelBuilder.Entity("CommitMaster.Sirius.Domain.Entities.Plano", b =>
@@ -54,13 +97,13 @@ namespace CommitMaster.Sirius.Api.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(200)");
 
                     b.Property<int>("Duracao")
                         .HasColumnType("integer");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(200)");
 
                     b.Property<decimal>("Preco")
                         .HasColumnType("numeric");
@@ -68,6 +111,39 @@ namespace CommitMaster.Sirius.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Planos");
+                });
+
+            modelBuilder.Entity("CommitMaster.Sirius.Domain.Entities.Usuario", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AlunoId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("DataExpiracao")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlunoId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("CommitMaster.Sirius.Domain.Entities.Aluno", b =>
@@ -79,7 +155,7 @@ namespace CommitMaster.Sirius.Api.Migrations
 
                             b1.Property<string>("Numero")
                                 .IsRequired()
-                                .HasColumnType("varchar(20)")
+                                .HasColumnType("varchar(200)")
                                 .HasColumnName("cpf");
 
                             b1.HasKey("AlunoId");
@@ -97,7 +173,7 @@ namespace CommitMaster.Sirius.Api.Migrations
 
                             b1.Property<string>("Numero")
                                 .IsRequired()
-                                .HasColumnType("varchar(20)")
+                                .HasColumnType("varchar(200)")
                                 .HasColumnName("numero_telefone");
 
                             b1.HasKey("AlunoId");
@@ -111,6 +187,40 @@ namespace CommitMaster.Sirius.Api.Migrations
                     b.Navigation("Cpf");
 
                     b.Navigation("Telefone");
+                });
+
+            modelBuilder.Entity("CommitMaster.Sirius.Domain.Entities.Assinatura", b =>
+                {
+                    b.HasOne("CommitMaster.Sirius.Domain.Entities.Aluno", "Aluno")
+                        .WithOne("Assinatura")
+                        .HasForeignKey("CommitMaster.Sirius.Domain.Entities.Assinatura", "AlunoId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.HasOne("CommitMaster.Sirius.Domain.Entities.Plano", "Plano")
+                        .WithMany()
+                        .HasForeignKey("PlanoId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Aluno");
+
+                    b.Navigation("Plano");
+                });
+
+            modelBuilder.Entity("CommitMaster.Sirius.Domain.Entities.Usuario", b =>
+                {
+                    b.HasOne("CommitMaster.Sirius.Domain.Entities.Aluno", "Aluno")
+                        .WithMany()
+                        .HasForeignKey("AlunoId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.Navigation("Aluno");
+                });
+
+            modelBuilder.Entity("CommitMaster.Sirius.Domain.Entities.Aluno", b =>
+                {
+                    b.Navigation("Assinatura");
                 });
 #pragma warning restore 612, 618
         }

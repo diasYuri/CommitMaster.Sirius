@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
-using CommitMaster.Sirius.App.Events.v1.AlunoUseCases;
+using CommitMaster.Contracts.Events.v1;
+using CommitMaster.Sirius.Domain.Contracts.v1.Bus;
 using MediatR;
 
 namespace CommitMaster.Sirius.App.Handlers.EventHandlers.v1.AlunoUseCases
@@ -10,6 +11,12 @@ namespace CommitMaster.Sirius.App.Handlers.EventHandlers.v1.AlunoUseCases
         INotificationHandler<SolicitaPagamentoEvent>,
         INotificationHandler<AlunoAtivoEvent>
     {
+        private readonly IMessageBus _messageBus;
+
+        public AlunoEventHandler(IMessageBus messageBus)
+        {
+            _messageBus = messageBus;
+        }
 
         public Task Handle(AlunoCriadoEvent notification, CancellationToken cancellationToken)
         {
@@ -18,6 +25,7 @@ namespace CommitMaster.Sirius.App.Handlers.EventHandlers.v1.AlunoUseCases
 
         public Task Handle(SolicitaPagamentoEvent notification, CancellationToken cancellationToken)
         {
+            _messageBus.Publish(notification);
             return Task.CompletedTask;
         }
 

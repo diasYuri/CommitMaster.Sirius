@@ -1,7 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <LangVersion>9</LangVersion>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CommitMaster.Contracts\CommitMaster.Contracts.csproj" />
+    </ItemGroup>
 
 </Project>

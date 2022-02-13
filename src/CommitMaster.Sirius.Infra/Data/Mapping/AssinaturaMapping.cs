@@ -15,7 +15,9 @@ namespace CommitMaster.Sirius.Infra.Data.Mapping
                 .HasConversion<int>();
 
             builder.HasOne(a => a.Aluno)
-                .WithOne(a => a.Assinatura);
+                .WithOne(a => a.Assinatura)
+                .HasForeignKey<Assinatura>(p => p.AlunoId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne(a => a.Plano);
         }

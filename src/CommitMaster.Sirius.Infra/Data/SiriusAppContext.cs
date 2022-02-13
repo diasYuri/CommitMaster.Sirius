@@ -9,6 +9,7 @@ namespace CommitMaster.Sirius.Infra.Data
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Plano> Planos { get; set; }
         public DbSet<Assinatura> Assinaturas { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
         public SiriusAppContext(DbContextOptions options) : base(options){ }
 
@@ -21,7 +22,7 @@ namespace CommitMaster.Sirius.Infra.Data
                 property.SetColumnType("varchar(200)");
             
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
-                         .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
+                         .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.SetNull;
 
             
             base.OnModelCreating(modelBuilder);

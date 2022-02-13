@@ -29,7 +29,7 @@ namespace CommitMaster.Sirius.App.Handlers.CommandHandlers.v1
             return new HandlerResponse<T> {
                 Success = false,
                 StatusCode = HttpStatusCode.BadRequest,
-                Errors = { new Error{Code = "Erro interno", Message = "Erro interno"} }
+                Errors = new List<Error>{ new Error{Code = "Erro interno", Message = "Erro interno"} }
             };
         }
         
@@ -58,8 +58,10 @@ namespace CommitMaster.Sirius.App.Handlers.CommandHandlers.v1
             return new HandlerResponse<T> {
                 Success = false,
                 StatusCode = HttpStatusCode.BadRequest,
-                Errors =  { new Error{Code = code, Message = message} }
+                Errors =  new List<Error>{ new (){Code = code, Message = message} }
             };
         }
+        
+       
     }
 }

@@ -16,7 +16,7 @@ namespace CommitMaster.Sirius.Infra.Autentication
             _configuration = configuration;
         }
 
-        public string CreateToken(string email, string role)
+        public string CreateToken(Guid id, string email, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["Secrets:Jwt"]);
@@ -25,8 +25,10 @@ namespace CommitMaster.Sirius.Infra.Autentication
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Email, email),
-                    new Claim(ClaimTypes.Name, email),
-                    new Claim(ClaimTypes.Role, role)
+                    new Claim(ClaimTypes.Name, id.ToString()),
+                    new Claim(ClaimTypes.Role, role),
+                    new(JwtRegisteredClaimNames.Sub, id.ToString()),
+                    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -38,7 +40,7 @@ namespace CommitMaster.Sirius.Infra.Autentication
 
     public interface ITokenService
     {
-        string CreateToken(string email, string role);
+        string CreateToken(Guid id, string email, string role);
 
     }
 }

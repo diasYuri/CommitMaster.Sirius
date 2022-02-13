@@ -1,7 +1,9 @@
 using System;
 using System.Threading.Tasks;
+using CommitMaster.Sirius.Api.Services;
 using CommitMaster.Sirius.App.Commands.v1.AlunoUseCases;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommitMaster.Sirius.Api.Controllers.v1
@@ -11,10 +13,12 @@ namespace CommitMaster.Sirius.Api.Controllers.v1
     public class AlunoController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly UserAccessor _userAccessor;
 
-        public AlunoController(IMediator mediator)
+        public AlunoController(IMediator mediator, UserAccessor userAccessor)
         {
             _mediator = mediator;
+            _userAccessor = userAccessor;
         }
 
         [HttpPost()]
@@ -29,10 +33,12 @@ namespace CommitMaster.Sirius.Api.Controllers.v1
             return StatusCode((int)result.StatusCode,result.Errors);
         }
         
-        [HttpPost("{id:guid}/assinar")]
-        public async Task<IActionResult> AssinarPlano([FromBody] AssinarPlanoCommand command, Guid id)
+       
+        [Authorize]
+        [HttpPost("assinar")]
+        public async Task<IActionResult> AssinarPlano([FromBody] AssinarPlanoCommand command)
         {
-            command.AlunoId = id;
+            command.AlunoId = _userAccessor.GetUserId();
             var result = await _mediator.Send(command);
 
             if (result.Success) {
@@ -41,5 +47,7 @@ namespace CommitMaster.Sirius.Api.Controllers.v1
 
             return StatusCode((int)result.StatusCode,result.Errors);
         }
+
+       
     }
 }

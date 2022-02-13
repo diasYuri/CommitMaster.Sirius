@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommitMaster.Sirius.Api.Extensions;
 using CommitMaster.Sirius.Api.HostedServices;
+using CommitMaster.Sirius.Api.Services;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,6 +23,7 @@ using CommitMaster.Sirius.Infra.CrossCutting;
 using CommitMaster.Sirius.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 
 namespace CommitMaster.Sirius.Api
@@ -39,25 +42,8 @@ namespace CommitMaster.Sirius.Api
         {
 
             services.AddControllers();
-            
-            var key = Encoding.ASCII.GetBytes(Configuration["Secrets:Jwt"]);
-            services.AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(x =>
-                {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
+
+            services.AddJwtAuthorization(Configuration);
             
             
             services.AddCustomMediator();
@@ -71,12 +57,14 @@ namespace CommitMaster.Sirius.Api
             services.AddMessageBus(Configuration["ConnectionStrings:RabbitMQ"])
                 .AddHostedService<PaymentServiceCallback>();
             
-            services.AddScoped<IPasswordEncrypt, PasswordEncrypt>();
-            services.AddScoped<ITokenService, TokenService>();
             
-            services.AddSwaggerGen(c => {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CommitMaster.Sirius.Api", Version = "v1" });
-            });
+            services
+                .AddScoped<ITokenService, TokenService>()
+                .AddScoped<IPasswordEncrypt, PasswordEncrypt>()
+                .AddScoped<UserAccessor>()
+                .AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
+            services.AddSwaggerWithSecurity();
         }
 
         
@@ -90,10 +78,14 @@ namespace CommitMaster.Sirius.Api
 
             app.UseHttpsRedirection();
 
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseCustomAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

@@ -1,7 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using CommitMaster.Sirius.Api.Services;
-using CommitMaster.Sirius.App.Commands.v1.AlunoUseCases;
+using CommitMaster.Sirius.App.UseCases.v1.AssinarPlano;
+using CommitMaster.Sirius.App.UseCases.v1.CriarAluno;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

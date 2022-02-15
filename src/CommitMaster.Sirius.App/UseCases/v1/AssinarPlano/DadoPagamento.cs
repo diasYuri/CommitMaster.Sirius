@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using CommitMaster.Sirius.Domain.Utils;
 
-namespace CommitMaster.Sirius.App.Commands.v1.AlunoUseCases
+namespace CommitMaster.Sirius.App.UseCases.v1.AssinarPlano
 {
     public class DadoPagamento
     {

@@ -4,7 +4,7 @@ using CommitMaster.Contracts.Events.v1;
 using CommitMaster.Sirius.Domain.Contracts.v1.Bus;
 using MediatR;
 
-namespace CommitMaster.Sirius.App.Handlers.EventHandlers.v1.AlunoUseCases
+namespace CommitMaster.Sirius.App.EventHandlers.v1.AlunoUseCases
 {
     public class AlunoEventHandler : 
         INotificationHandler<AlunoCriadoEvent>,

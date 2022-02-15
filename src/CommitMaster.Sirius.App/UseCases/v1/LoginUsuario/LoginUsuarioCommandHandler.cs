@@ -1,8 +1,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CommitMaster.Sirius.App.Handlers.CommandHandlers.v1;
-using CommitMaster.Sirius.App.Responses.v1;
 using CommitMaster.Sirius.Domain.UseCases.Autorization;
 using CommitMaster.Sirius.Infra.Autentication;
 using CommitMaster.Sirius.Infra.Criptografia.v1;

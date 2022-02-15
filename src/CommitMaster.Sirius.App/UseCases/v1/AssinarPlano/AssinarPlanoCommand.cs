@@ -2,12 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using CommitMaster.Sirius.App.Responses.v1;
-using CommitMaster.Sirius.App.Responses.v1.AlunoUseCases;
 using CommitMaster.Sirius.Domain.Contracts;
 using MediatR;
 
-namespace CommitMaster.Sirius.App.Commands.v1.AlunoUseCases
+namespace CommitMaster.Sirius.App.UseCases.v1.AssinarPlano
 {
     public class AssinarPlanoCommand : IRequest<HandlerResponse<AssinarPlanoCommandResponse>> , ICommandValidable
     {

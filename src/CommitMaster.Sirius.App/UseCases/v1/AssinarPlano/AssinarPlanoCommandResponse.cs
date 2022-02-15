@@ -1,6 +1,6 @@
 using System;
 
-namespace CommitMaster.Sirius.App.Responses.v1.AlunoUseCases
+namespace CommitMaster.Sirius.App.UseCases.v1.AssinarPlano
 {
     public class AssinarPlanoCommandResponse
     {

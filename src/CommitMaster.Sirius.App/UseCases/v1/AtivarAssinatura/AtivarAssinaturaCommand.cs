@@ -1,9 +1,7 @@
 using System;
-using CommitMaster.Sirius.App.Responses.v1;
-using CommitMaster.Sirius.App.Responses.v1.AlunoUseCases;
 using MediatR;
 
-namespace CommitMaster.Sirius.App.Commands.v1.AlunoUseCases
+namespace CommitMaster.Sirius.App.UseCases.v1.AtivarAssinatura
 {
     public class AtivarAssinaturaCommand : IRequest<HandlerResponse<AtivarAssinaturaCommandResponse>>
     {

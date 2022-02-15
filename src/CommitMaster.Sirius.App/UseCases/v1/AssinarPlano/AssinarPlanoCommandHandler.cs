@@ -4,15 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommitMaster.Contracts.Events.v1;
 using CommitMaster.Contracts.Mensageria;
-using CommitMaster.Sirius.App.Commands.v1.AlunoUseCases;
-using CommitMaster.Sirius.App.Responses.v1;
-using CommitMaster.Sirius.App.Responses.v1.AlunoUseCases;
 using CommitMaster.Sirius.Domain.Entities;
 using CommitMaster.Sirius.Infra.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CommitMaster.Sirius.App.Handlers.CommandHandlers.v1.AlunoUseCases
+namespace CommitMaster.Sirius.App.UseCases.v1.AssinarPlano
 {
     public class CriarAssinaturaCommandHandler :
         HandlerResponseBase,

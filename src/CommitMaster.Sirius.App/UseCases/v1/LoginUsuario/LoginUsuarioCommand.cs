@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using CommitMaster.Sirius.App.Responses.v1;
 using CommitMaster.Sirius.Domain.Contracts;
 using MediatR;
 

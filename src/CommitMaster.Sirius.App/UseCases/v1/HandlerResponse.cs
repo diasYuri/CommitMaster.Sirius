@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 using CommitMaster.Sirius.Domain.Contracts.v1.Validation;
 
-namespace CommitMaster.Sirius.App.Responses.v1
+namespace CommitMaster.Sirius.App.UseCases.v1
 {
     public class HandlerResponse<T>
     {

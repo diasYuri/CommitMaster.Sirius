@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using CommitMaster.Contracts.Events.v1;
-using CommitMaster.Sirius.App.Commands.v1.AlunoUseCases;
+using CommitMaster.Sirius.App.UseCases.v1.AtivarAssinatura;
 using CommitMaster.Sirius.Domain.Contracts.v1.Bus;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

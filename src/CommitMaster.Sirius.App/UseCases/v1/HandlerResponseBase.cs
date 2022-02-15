@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using CommitMaster.Sirius.App.Responses.v1;
 using CommitMaster.Sirius.Domain.Contracts.v1.Validation;
 
-namespace CommitMaster.Sirius.App.Handlers.CommandHandlers.v1
+namespace CommitMaster.Sirius.App.UseCases.v1
 {
     public abstract class HandlerResponseBase
     {

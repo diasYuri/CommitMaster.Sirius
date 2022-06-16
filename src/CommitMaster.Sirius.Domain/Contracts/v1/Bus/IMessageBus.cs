@@ -11,5 +11,5 @@ namespace CommitMaster.Sirius.Domain.Contracts.v1.Bus
 
         void SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : Message;
     }
-    
+
 }

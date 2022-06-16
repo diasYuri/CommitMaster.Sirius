@@ -5,14 +5,14 @@ namespace CommitMaster.Sirius.Domain.Utils
 {
     public class FieldValidation
     {
-        
+
     }
 
     public class IsNumber : ValidationAttribute
     {
         public IsNumber()
         {
-            
+
         }
 
         /// <summary>

@@ -10,57 +10,62 @@ namespace CommitMaster.Sirius.App.UseCases.v1
         private List<Error> MapValidationResults(List<System.ComponentModel.DataAnnotations.ValidationResult> errors)
         {
             return errors.Select(e => new Error
-                { Code = e.MemberNames.First(), Message = e.ErrorMessage }).ToList();
+            { Code = e.MemberNames.First(), Message = e.ErrorMessage }).ToList();
         }
 
 
         public HandlerResponse<T> FailValidation<T>(List<System.ComponentModel.DataAnnotations.ValidationResult> errors)
         {
-            return new HandlerResponse<T> {
+            return new HandlerResponse<T>
+            {
                 Success = false,
                 StatusCode = HttpStatusCode.BadRequest,
                 Errors = MapValidationResults(errors)
             };
         }
-        
+
         public HandlerResponse<T> ErroInterno<T>()
         {
-            return new HandlerResponse<T> {
+            return new HandlerResponse<T>
+            {
                 Success = false,
                 StatusCode = HttpStatusCode.BadRequest,
-                Errors = new List<Error>{ new Error{Code = "Erro interno", Message = "Erro interno"} }
+                Errors = new List<Error> { new Error { Code = "Erro interno", Message = "Erro interno" } }
             };
         }
-        
+
         public HandlerResponse<T> SucessoCriado<T>(T data)
         {
-            return new HandlerResponse<T> {
+            return new HandlerResponse<T>
+            {
                 Success = true,
                 StatusCode = HttpStatusCode.Created,
                 Errors = null,
                 Data = data
             };
         }
-        
+
         public HandlerResponse<T> Sucesso<T>(T data)
         {
-            return new HandlerResponse<T> {
+            return new HandlerResponse<T>
+            {
                 Success = true,
                 StatusCode = HttpStatusCode.OK,
                 Errors = null,
                 Data = data
             };
         }
-        
+
         public HandlerResponse<T> ErroCommand<T>(string code, string message)
         {
-            return new HandlerResponse<T> {
+            return new HandlerResponse<T>
+            {
                 Success = false,
                 StatusCode = HttpStatusCode.BadRequest,
-                Errors =  new List<Error>{ new (){Code = code, Message = message} }
+                Errors = new List<Error> { new() { Code = code, Message = message } }
             };
         }
-        
-       
+
+
     }
 }

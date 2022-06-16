@@ -37,40 +37,41 @@ namespace CommitMaster.Sirius.Api
 
         public IConfiguration Configuration { get; }
 
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddControllers();
 
             services.AddJwtAuthorization(Configuration);
-            
-            
+
+
             services.AddCustomMediator();
             services.AddDbContext<SiriusAppContext>(options =>
             {
-                options.UseNpgsql(Configuration["ConnectionStrings:PostgreSqlConnection"], 
+                options.UseNpgsql(Configuration["ConnectionStrings:PostgreSqlConnection"],
                     b => b.MigrationsAssembly("CommitMaster.Sirius.Api"));
             });
 
 
             services.AddMessageBus(Configuration["ConnectionStrings:RabbitMQ"])
                 .AddHostedService<PaymentServiceCallback>();
-            
-            
+
+
             services
                 .AddScoped<ITokenService, TokenService>()
                 .AddScoped<IPasswordEncrypt, PasswordEncrypt>()
                 .AddScoped<UserAccessor>()
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
+
             services.AddSwaggerWithSecurity();
         }
 
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment()) {
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CommitMaster.Sirius.Api v1"));
@@ -82,7 +83,7 @@ namespace CommitMaster.Sirius.Api
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-            
+
             app.UseRouting();
 
             app.UseCustomAuthorization();

@@ -15,26 +15,28 @@ public class Worker : BackgroundService
         _messageBus = messageBus;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-        
-        
-        
-        _messageBus.SubscribeAsync<SolicitaPagamentoEvent>("ProcessadorPagamento", 
+
+
+
+        _messageBus.SubscribeAsync<SolicitaPagamentoEvent>("ProcessadorPagamento",
             async request => await ProcessarPagamento(request));
+        return Task.CompletedTask;
     }
 
     private async Task ProcessarPagamento(SolicitaPagamentoEvent message)
     {
         _logger.LogInformation("Nova solicitacao de pagamento, hora: {time}", DateTimeOffset.Now);
-        var confirmacaoPagamentoEvent = new ConfirmacaoPagamentoEvent {
+        var confirmacaoPagamentoEvent = new ConfirmacaoPagamentoEvent
+        {
             AssinaturaId = message.SubscriptionId,
             PagamentoComSucesso = true,
             DataPagamento = DateTime.UtcNow
         };
-        
+
         await _messageBus.PublishAsync(confirmacaoPagamentoEvent);
-        
+
     }
 }

@@ -12,21 +12,21 @@ namespace CommitMaster.Sirius.App.UseCases.v1.CriarAluno
         [Required(ErrorMessage = "O nome é obrigatório")]
         [MaxLength(100, ErrorMessage = "O nome deve ter no máximo 100 caracteres")]
         public string Nome { get; set; }
-        
+
         [Required(ErrorMessage = "A Data de Aniversario é obrigatória")]
         public DateTime DataAniversario { get; set; }
-        
+
         [Required(ErrorMessage = "O Campo Cpf é obrigatório")]
         [CpfValidation.CustomValidationCPFAttribute(ErrorMessage = "O cpf é inválido")]
         public string Cpf { get; set; }
-        
+
         [Required(ErrorMessage = "O Telefone é obrigatório")]
         public string Telefone { get; set; }
-        
+
         [Required(ErrorMessage = "O Email é obrigatório")]
         [EmailAddress(ErrorMessage = "Email inválido")]
         public string Email { get; set; }
-        
+
         [Required(ErrorMessage = "A senha é obrigatória")]
         public string Senha { get; set; }
 
@@ -40,9 +40,9 @@ namespace CommitMaster.Sirius.App.UseCases.v1.CriarAluno
 
             return Validator.TryValidateObject(this, ctx, errors, true);
         }
-        
-        
-        
+
+
+
     }
 
 

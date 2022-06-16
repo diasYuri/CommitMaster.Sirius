@@ -29,10 +29,10 @@ public class PaymentServiceCallback : BackgroundService
     {
         _bus.SubscribeAsync<ConfirmacaoPagamentoEvent>("PedidoCancelado",
             async request => await PaymentCallback(request));
-        
+
         return Task.CompletedTask;
     }
-    
+
     private async Task PaymentCallback(ConfirmacaoPagamentoEvent message)
     {
         using (var scope = _serviceProvider.CreateScope())
@@ -40,13 +40,14 @@ public class PaymentServiceCallback : BackgroundService
             _logger.LogInformation("Nova resposta de solicitacao de pagamento, id: {id}", message.AssinaturaId);
             var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-            var command = new AtivarAssinaturaCommand {
+            var command = new AtivarAssinaturaCommand
+            {
                 AssinaturaId = message.AssinaturaId,
                 PagamentoComSucesso = message.PagamentoComSucesso
             };
 
             var response = await mediator.Send(command);
-            
+
             _logger.LogInformation("Resultado callback paymentService, sucesso: {status}", response.Success);
         }
     }

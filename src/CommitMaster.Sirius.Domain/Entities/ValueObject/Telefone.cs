@@ -6,7 +6,7 @@ namespace CommitMaster.Sirius.Domain.Entities.ValueObject
 
         public Telefone()
         {
-            
+
         }
 
         public Telefone(string numero)

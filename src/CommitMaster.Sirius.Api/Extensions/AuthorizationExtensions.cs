@@ -42,36 +42,37 @@ public static class AuthorizationExtensions
 
         return services;
     }
-    
+
     public static IServiceCollection AddSwaggerWithSecurity(
         this IServiceCollection services)
     {
-        services.AddSwaggerGen(c => {
+        services.AddSwaggerGen(c =>
+        {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "CommitMaster.Sirius.Api", Version = "v1" });
-                
-            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme() 
-            { 
-                Name = "Authorization", 
-                Type = SecuritySchemeType.ApiKey, 
-                Scheme = "Bearer", 
-                BearerFormat = "JWT", 
-                In = ParameterLocation.Header, 
-                Description = "Bearer Token", 
-            }); 
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement 
-            { 
-                { 
-                    new OpenApiSecurityScheme 
-                    { 
-                        Reference = new OpenApiReference 
-                        { 
-                            Type = ReferenceType.SecurityScheme, 
-                            Id = "Bearer" 
-                        } 
-                    }, 
-                    new string[] {} 
-                } 
-            }); 
+
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Bearer Token",
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
+            });
         });
 
         return services;

@@ -13,7 +13,7 @@ namespace CommitMaster.Sirius.Domain.Entities.ValueObject
 
         public Cpf()
         {
-            
+
         }
     }
 }

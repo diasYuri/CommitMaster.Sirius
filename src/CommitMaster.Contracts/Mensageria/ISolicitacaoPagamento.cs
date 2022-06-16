@@ -11,7 +11,7 @@ namespace CommitMaster.Contracts.Mensageria
         public int Installments { get; set; }
         public PaymentCard PaymentCardInfo { get; set; }
         public PaymentPayer PaymentPayerInfo { get; set; }
-        
+
 
         public class PaymentPayer
         {
@@ -25,6 +25,6 @@ namespace CommitMaster.Contracts.Mensageria
             public string Email { get; set; }
             public string NumberDocument { get; set; }
         }
-        
+
     }
 }

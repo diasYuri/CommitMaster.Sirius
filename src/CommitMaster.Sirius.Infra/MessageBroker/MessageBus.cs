@@ -24,7 +24,7 @@ namespace CommitMaster.Sirius.Infra.MessageBroker
         public bool IsConnected => _bus?.Advanced.IsConnected ?? false;
         public IAdvancedBus AdvancedBus => _bus?.Advanced;
 
-        public void Publish<T>(T message) where T : Message 
+        public void Publish<T>(T message) where T : Message
         {
             TryConnect();
             _bus.PubSub.Publish(message);
@@ -51,7 +51,7 @@ namespace CommitMaster.Sirius.Infra.MessageBroker
 
         private void TryConnect()
         {
-            if(IsConnected) return;
+            if (IsConnected) return;
 
             var policy = Policy.Handle<EasyNetQException>()
                 .Or<BrokerUnreachableException>()

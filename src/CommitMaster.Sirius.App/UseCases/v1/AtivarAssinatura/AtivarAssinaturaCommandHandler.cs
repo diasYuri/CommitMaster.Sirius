@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CommitMaster.Sirius.App.UseCases.v1.AtivarAssinatura
 {
-    public class AtivarAssinaturaCommandHandler : 
+    public class AtivarAssinaturaCommandHandler :
         HandlerResponseBase,
         IRequestHandler<AtivarAssinaturaCommand, HandlerResponse<AtivarAssinaturaCommandResponse>>
     {
@@ -29,25 +29,30 @@ namespace CommitMaster.Sirius.App.UseCases.v1.AtivarAssinatura
                 .Where(a => a.Id == request.AssinaturaId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if (assinatura == null) {
+            if (assinatura == null)
+            {
                 return ErroCommand<AtivarAssinaturaCommandResponse>("Não encontrado", "Assinatura não encontrada");
             }
-            
-            if (request.PagamentoComSucesso) {
+
+            if (request.PagamentoComSucesso)
+            {
                 assinatura.Ativar();
             }
-            else {
+            else
+            {
                 assinatura.PagamentoRejeitado();
             }
 
             _appContext.Assinaturas.Update(assinatura);
             var success = await _appContext.SaveChangesAsync(cancellationToken) > 1;
 
-            if (success) {
+            if (success)
+            {
                 await SendAlunoAtivoEvent(assinatura.AlunoId, cancellationToken);
             }
-            
-            return Sucesso(new AtivarAssinaturaCommandResponse {
+
+            return Sucesso(new AtivarAssinaturaCommandResponse
+            {
                 Sucesso = success
             });
         }
@@ -60,8 +65,10 @@ namespace CommitMaster.Sirius.App.UseCases.v1.AtivarAssinatura
                 .AsNoTracking()
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if (aluno != null) {
-                await _mediator.Publish(new AlunoAtivoEvent {
+            if (aluno != null)
+            {
+                await _mediator.Publish(new AlunoAtivoEvent
+                {
                     Ativo = true,
                     Email = aluno.Email
                 }, cancellationToken);

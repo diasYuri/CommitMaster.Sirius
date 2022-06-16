@@ -8,7 +8,7 @@ namespace CommitMaster.Sirius.Infra.Criptografia.v1
         {
             return PasswordHasher.Hash(password);
         }
-        
+
         public bool VerifyPassword(string hash, string password)
         {
             return PasswordHasher.Verify(hash, password);

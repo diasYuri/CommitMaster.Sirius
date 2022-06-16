@@ -25,7 +25,8 @@ namespace CommitMaster.Sirius.App.UseCases.v1.CriarAluno
 
         public async Task<HandlerResponse<CriarAlunoCommandResponse>> Handle(CriarAlunoCommand request, CancellationToken cancellationToken)
         {
-            if (!request.IsValid(out var errors)) {
+            if (!request.IsValid(out var errors))
+            {
                 return FailValidation<CriarAlunoCommandResponse>(errors);
             }
 
@@ -33,14 +34,15 @@ namespace CommitMaster.Sirius.App.UseCases.v1.CriarAluno
                 .Alunos
                 .AnyAsync(a => a.Email == request.Email, CancellationToken.None);
 
-            if (alunoExist) {
+            if (alunoExist)
+            {
                 return ErroCommand<CriarAlunoCommandResponse>("Erro", "Já existe uma aluno com esse email");
             }
-            
+
             var aluno = new Aluno(
                 request.Nome,
                 request.Email,
-                request.DataAniversario, 
+                request.DataAniversario,
                 request.Cpf,
                 request.Telefone
                 );
@@ -48,12 +50,14 @@ namespace CommitMaster.Sirius.App.UseCases.v1.CriarAluno
             _appContext.Alunos.Add(aluno);
             var sucesso = await _appContext.SaveChangesAsync(cancellationToken) > 0;
 
-            if (!sucesso) {
+            if (!sucesso)
+            {
                 return ErroInterno<CriarAlunoCommandResponse>();
             }
-            
-            
-            var command = new CriarUsuarioCommand {
+
+
+            var command = new CriarUsuarioCommand
+            {
                 Nome = request.Nome,
                 Senha = request.Senha,
                 AlunoId = aluno.Id,
@@ -62,10 +66,11 @@ namespace CommitMaster.Sirius.App.UseCases.v1.CriarAluno
             };
 
             _ = await _mediator.Send(command, cancellationToken);
-            
-            
+
+
             //Notify
-            var alunoEvent = new AlunoCriadoEvent {
+            var alunoEvent = new AlunoCriadoEvent
+            {
                 Nome = request.Nome,
                 Cpf = request.Cpf,
                 DataAniversario = request.DataAniversario,
@@ -76,10 +81,10 @@ namespace CommitMaster.Sirius.App.UseCases.v1.CriarAluno
 
             await _mediator.Publish(alunoEvent, cancellationToken);
 
-            return SucessoCriado(new CriarAlunoCommandResponse{ AlunoId = aluno.Id});
+            return SucessoCriado(new CriarAlunoCommandResponse { AlunoId = aluno.Id });
         }
-        
-        
+
+
 
     }
 }

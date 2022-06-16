@@ -5,7 +5,7 @@ namespace CommitMaster.Sirius.Domain.Utils
 {
     public class CpfValidation
     {
-        
+
         /// <summary>
         /// Valida se um cpf é válido
         /// </summary>
@@ -66,13 +66,13 @@ namespace CommitMaster.Sirius.Domain.Utils
 
             return true;
         }
-        
+
         /// <summary>
         /// Validação customizada para CPF
         /// </summary>
         public class CustomValidationCPFAttribute : ValidationAttribute
         {
-            
+
             public CustomValidationCPFAttribute() { }
 
             /// <summary>

@@ -33,15 +33,16 @@ namespace CommitMaster.Sirius.App.UseCases.v1.CriarUsuario
 
             var userExiste = await _dbcontext.Usuarios.AnyAsync(u => u.Email == request.Email, cancellationToken: cancellationToken);
 
-            if (userExiste) {
-                return ErroCommand<CriarUsuarioCommandResponse>("400","Usuário já existe");
+            if (userExiste)
+            {
+                return ErroCommand<CriarUsuarioCommandResponse>("400", "Usuário já existe");
             }
 
 
             _dbcontext.Usuarios.Add(usuario);
             await _dbcontext.SaveChangesAsync(cancellationToken);
 
-            return SucessoCriado<CriarUsuarioCommandResponse>(new ());
+            return SucessoCriado<CriarUsuarioCommandResponse>(new());
         }
     }
 

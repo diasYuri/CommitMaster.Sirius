@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CommitMaster.Sirius.App.EventHandlers.v1.AlunoUseCases
 {
-    public class AlunoEventHandler : 
+    public class AlunoEventHandler :
         INotificationHandler<AlunoCriadoEvent>,
         INotificationHandler<SolicitaPagamentoEvent>,
         INotificationHandler<AlunoAtivoEvent>

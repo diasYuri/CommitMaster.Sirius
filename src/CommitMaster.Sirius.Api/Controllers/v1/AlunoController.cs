@@ -27,14 +27,15 @@ namespace CommitMaster.Sirius.Api.Controllers.v1
         {
             var result = await _mediator.Send(command);
 
-            if (result.Success) {
-                return StatusCode((int)result.StatusCode,result.Data);
+            if (result.Success)
+            {
+                return StatusCode((int)result.StatusCode, result.Data);
             }
 
-            return StatusCode((int)result.StatusCode,result.Errors);
+            return StatusCode((int)result.StatusCode, result.Errors);
         }
-        
-       
+
+
         [Authorize]
         [HttpPost("assinar")]
         public async Task<IActionResult> AssinarPlano([FromBody] AssinarPlanoCommand command)
@@ -42,13 +43,14 @@ namespace CommitMaster.Sirius.Api.Controllers.v1
             command.AlunoId = _userAccessor.GetUserId();
             var result = await _mediator.Send(command);
 
-            if (result.Success) {
-                return StatusCode((int)result.StatusCode,result.Data);
+            if (result.Success)
+            {
+                return StatusCode((int)result.StatusCode, result.Data);
             }
 
-            return StatusCode((int)result.StatusCode,result.Errors);
+            return StatusCode((int)result.StatusCode, result.Errors);
         }
 
-       
+
     }
 }

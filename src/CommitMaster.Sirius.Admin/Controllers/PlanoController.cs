@@ -49,7 +49,7 @@ namespace CommitMaster.Sirius.Admin.Controllers
             return View();
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Nome,Duracao,Preco,Descricao,Id,CreatedAt")] Plano plano)
@@ -80,7 +80,7 @@ namespace CommitMaster.Sirius.Admin.Controllers
             return View(plano);
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Nome,Duracao,Preco,Descricao,Id,CreatedAt")] Plano plano)

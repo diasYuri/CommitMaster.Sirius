@@ -13,26 +13,26 @@ namespace CommitMaster.Sirius.Infra.Data.Mapping
             builder.Property(a => a.Nome)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
-            
+
             builder.Property(p => p.Email)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
-            
+
             builder.HasIndex(p => p.Email)
                 .IsUnique();
-            
+
             builder.OwnsOne(p => p.Cpf)
                 .Property(p => p.Numero)
                 .HasColumnName("cpf")
                 .IsRequired()
                 .HasColumnType("varchar(20)");
-            
+
             builder.OwnsOne(p => p.Telefone)
                 .Property(p => p.Numero)
                 .HasColumnName("numero_telefone")
                 .IsRequired()
                 .HasColumnType("varchar(20)");
-            
+
             builder.Property(a => a.DataAniversario)
                 .IsRequired();
 

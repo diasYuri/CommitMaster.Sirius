@@ -10,14 +10,14 @@ namespace CommitMaster.Sirius.Domain.Entities
         public DateTime DataAniversario { get; private set; }
         public Cpf Cpf { get; private set; }
         public Telefone Telefone { get; private set; }
-       
+
         public Guid? AssinaturaId { get; private set; }
         public Assinatura Assinatura { get; private set; }
 
-        
+
         //EF 
         protected Aluno() { }
-        
+
         public Aluno(string nome, string email, DateTime dataAniversario, string cpf, string telefone)
         {
             Nome = nome;
@@ -29,7 +29,8 @@ namespace CommitMaster.Sirius.Domain.Entities
 
         public bool AdicionaAssinatura(Assinatura assinatura)
         {
-            if (AssinaturaId == null || AssinaturaId == Guid.Empty || (Assinatura != null && Assinatura.Invalida())) {
+            if (AssinaturaId == null || AssinaturaId == Guid.Empty || (Assinatura != null && Assinatura.Invalida()))
+            {
                 Assinatura = assinatura;
                 AssinaturaId = assinatura.Id;
                 return true;
@@ -40,7 +41,8 @@ namespace CommitMaster.Sirius.Domain.Entities
 
         public (bool, string) VerificarAssinatura()
         {
-            if (Assinatura == null) {
+            if (Assinatura == null)
+            {
                 return (false, string.Empty);
             }
 

@@ -17,17 +17,18 @@ public class UsuarioController : ControllerBase
     {
         _mediator = mediator;
     }
-    
+
     [HttpPost("login")]
     public async Task<IActionResult> AssinarPlano([FromBody] LoginUsuarioCommand command)
     {
         var result = await _mediator.Send(command);
 
-        if (result.Success) {
-            return StatusCode((int)result.StatusCode,result.Data);
+        if (result.Success)
+        {
+            return StatusCode((int)result.StatusCode, result.Data);
         }
 
-        return StatusCode((int)result.StatusCode,result.Errors);
+        return StatusCode((int)result.StatusCode, result.Errors);
     }
 
 }

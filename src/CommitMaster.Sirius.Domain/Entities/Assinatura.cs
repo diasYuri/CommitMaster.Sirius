@@ -35,22 +35,24 @@ namespace CommitMaster.Sirius.Domain.Entities
 
         public bool Ativar()
         {
-            if (EstadoAssinatura != EstadoAssinaturaEnum.Ativa) {
+            if (EstadoAssinatura != EstadoAssinaturaEnum.Ativa)
+            {
                 EstadoAssinatura = EstadoAssinaturaEnum.Ativa;
                 return true;
             }
-           
+
             return false;
-            
+
         }
-        
+
         public bool PagamentoRejeitado()
         {
-            if (EstadoAssinatura != EstadoAssinaturaEnum.PagamentoRejeitado) {
+            if (EstadoAssinatura != EstadoAssinaturaEnum.PagamentoRejeitado)
+            {
                 EstadoAssinatura = EstadoAssinaturaEnum.PagamentoRejeitado;
                 return true;
             }
-           
+
             return false;
         }
 
@@ -64,18 +66,20 @@ namespace CommitMaster.Sirius.Domain.Entities
             return Expirada() || EstadoAssinatura == EstadoAssinaturaEnum.PagamentoRejeitado;
         }
 
-        public string ObterStatusDaAssinatura() {
-            return EstadoAssinatura switch {
+        public string ObterStatusDaAssinatura()
+        {
+            return EstadoAssinatura switch
+            {
                 EstadoAssinaturaEnum.AguardadoAtivacao => "Assinatura aguardando pagamento",
                 EstadoAssinaturaEnum.Ativa => "Assinatura Ativa",
                 EstadoAssinaturaEnum.Expirada => "Assinatura Expirada",
                 EstadoAssinaturaEnum.PagamentoRejeitado => "O pagamento da assinatura foi rejeitado",
-                _ =>  string.Empty
+                _ => string.Empty
             };
-            
+
         }
 
-}
+    }
 
     public enum EstadoAssinaturaEnum
     {

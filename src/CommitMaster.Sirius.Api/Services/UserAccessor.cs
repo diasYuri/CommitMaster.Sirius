@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CommitMaster.Sirius.Api.Services;
 
-public class UserAccessor 
+public class UserAccessor
 {
     private readonly IHttpContextAccessor _accessor;
 
@@ -19,7 +19,7 @@ public class UserAccessor
             ? Guid.Parse(_accessor!.HttpContext!.User.GetUserId())
             : Guid.Empty;
     }
-        
+
     public string GetUserEmail()
     {
         return IsAuthenticated()
@@ -32,7 +32,7 @@ public class UserAccessor
         return _accessor?.HttpContext?.User.Identity?.IsAuthenticated ?? false;
     }
 }
-    
+
 public static class ClaimsPrincipalExtensions
 {
     public static string GetUserId(this ClaimsPrincipal principal)

@@ -14,7 +14,7 @@ namespace CommitMaster.Sirius.Infra.Data.Mapping
             builder.Property(p => p.Email)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
-            
+
             builder.HasIndex(p => p.Email)
                 .IsUnique();
 
@@ -24,8 +24,8 @@ namespace CommitMaster.Sirius.Infra.Data.Mapping
 
             builder.Property(p => p.DataExpiracao)
                 .IsRequired();
-            
-            
+
+
             builder.HasOne(a => a.Aluno);
 
             builder.Property(a => a.CreatedAt)

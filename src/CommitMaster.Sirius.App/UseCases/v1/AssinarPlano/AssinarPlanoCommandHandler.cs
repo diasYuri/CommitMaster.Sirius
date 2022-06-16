@@ -27,17 +27,19 @@ namespace CommitMaster.Sirius.App.UseCases.v1.AssinarPlano
 
         public async Task<HandlerResponse<AssinarPlanoCommandResponse>> Handle(AssinarPlanoCommand request, CancellationToken cancellationToken)
         {
-            if (!request.IsValid(out var errors)) {
+            if (!request.IsValid(out var errors))
+            {
                 return FailValidation<AssinarPlanoCommandResponse>(errors);
             }
-            
+
             var aluno = await _appContext
                 .Alunos
                 .Where(p => p.Id == request.AlunoId)
                 .Include(a => a.Assinatura)
                 .FirstOrDefaultAsync(cancellationToken);
-            
-            if (aluno == null) {
+
+            if (aluno == null)
+            {
                 return ErroCommand<AssinarPlanoCommandResponse>("Erro", "Esse Plano não existe");
             }
 
@@ -47,36 +49,42 @@ namespace CommitMaster.Sirius.App.UseCases.v1.AssinarPlano
                 .AsNoTrackingWithIdentityResolution()
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if (plano == null) {
+            if (plano == null)
+            {
                 return ErroCommand<AssinarPlanoCommandResponse>("Erro", "Esse Plano não existe");
             }
-            
+
             var sucessoAoAdicionaAssinatura = aluno.AdicionaAssinatura(new Assinatura(aluno, plano));
-            if (!sucessoAoAdicionaAssinatura) {
+            if (!sucessoAoAdicionaAssinatura)
+            {
                 return ErroCommand<AssinarPlanoCommandResponse>("Aluno já possui uma assinatura", "Verifique o estado da sua assinatura");
             }
-            
+
             _appContext.Alunos.Update(aluno);
             _appContext.Assinaturas.Add(aluno.Assinatura);
-            
+
             var sucesso = await _appContext.SaveChangesAsync(cancellationToken) > 0;
-            if (!sucesso) {
+            if (!sucesso)
+            {
                 return ErroInterno<AssinarPlanoCommandResponse>();
             }
 
 
-            var pagamentoEvent = new SolicitaPagamentoEvent {
+            var pagamentoEvent = new SolicitaPagamentoEvent
+            {
                 Id = Guid.NewGuid(),
                 SubscriptionId = aluno.Assinatura.Id,
                 Amount = plano.Preco,
                 Installments = request.DadoPagamento.NumeroParcela,
                 PaymentType = request.DadoPagamento.TipoPagamento,
-                PaymentCardInfo = new ISolicitacaoPagamento.PaymentCard {
+                PaymentCardInfo = new ISolicitacaoPagamento.PaymentCard
+                {
                     Email = aluno.Email,
                     Name = request.DadoPagamento.Nome,
                     NumberDocument = request.DadoPagamento.Cpf,
                 },
-                PaymentPayerInfo = new ISolicitacaoPagamento.PaymentPayer {
+                PaymentPayerInfo = new ISolicitacaoPagamento.PaymentPayer
+                {
                     CardNumber = request.DadoPagamento.NumeroCartao,
                     CVV = request.DadoPagamento.CVV,
                     ExpiryDate = request.DadoPagamento.DataVencimento
@@ -86,8 +94,9 @@ namespace CommitMaster.Sirius.App.UseCases.v1.AssinarPlano
             await _mediator.Publish(pagamentoEvent, cancellationToken);
 
             return SucessoCriado(
-                new AssinarPlanoCommandResponse {
-                    PagamentoId = aluno.Assinatura.Id, 
+                new AssinarPlanoCommandResponse
+                {
+                    PagamentoId = aluno.Assinatura.Id,
                     Message = "Pagamento em processamento"
                 });
         }
@@ -95,7 +104,8 @@ namespace CommitMaster.Sirius.App.UseCases.v1.AssinarPlano
         private HandlerResponse<AssinarPlanoCommandResponse> VerificarAssinatura(Aluno aluno)
         {
             var (temResultado, message) = aluno.VerificarAssinatura();
-            if (temResultado) {
+            if (temResultado)
+            {
                 return ErroCommand<AssinarPlanoCommandResponse>("Aluno já possui uma assinatura", $"Estado da assinatura atual: {message}");
             }
 

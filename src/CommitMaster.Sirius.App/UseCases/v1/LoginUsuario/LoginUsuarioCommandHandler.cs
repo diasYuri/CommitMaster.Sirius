@@ -33,13 +33,15 @@ namespace CommitMaster.Sirius.App.UseCases.v1.LoginUsuario
                 .FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
 
-            if (usuario == null) {
+            if (usuario == null)
+            {
                 return ErroCommand<LoginUsuarioCommandResponse>("Usuário ou Senha inválidos",
                     "Usuário ou Senha inválidos");
             }
-            
+
             var validPassword = _passwordEncrypt.VerifyPassword(usuario.Senha, request.Senha);
-            if (!validPassword) {
+            if (!validPassword)
+            {
                 return ErroCommand<LoginUsuarioCommandResponse>("Usuário ou Senha inválidos",
                     "Usuário ou Senha inválidos");
             }
@@ -48,14 +50,17 @@ namespace CommitMaster.Sirius.App.UseCases.v1.LoginUsuario
             var validadeAssinatura = usuario.ValidaAssinatura();
 
             string token;
-            if (validadeAssinatura == RolesEnum.AssinaturaValida) {
+            if (validadeAssinatura == RolesEnum.AssinaturaValida)
+            {
                 token = _tokenService.CreateToken(usuario.AlunoId, usuario.Email, RolesEnum.AssinaturaValida.ToString());
             }
-            else {
+            else
+            {
                 token = _tokenService.CreateToken(usuario.AlunoId, usuario.Email, RolesEnum.SemAssinatura.ToString());
             }
 
-            var response = new LoginUsuarioCommandResponse {
+            var response = new LoginUsuarioCommandResponse
+            {
                 Sucesso = true,
                 Token = token
             };

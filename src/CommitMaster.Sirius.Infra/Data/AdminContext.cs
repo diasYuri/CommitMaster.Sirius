@@ -7,7 +7,7 @@ namespace CommitMaster.Sirius.Infra.Data
     {
         public DbSet<Plano> Planos { get; set; }
 
-        public AdminContext(DbContextOptions options) : base(options){ }
+        public AdminContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -15,6 +15,6 @@ namespace CommitMaster.Sirius.Infra.Data
 
             base.OnModelCreating(modelBuilder);
         }
-    
+
     }
 }

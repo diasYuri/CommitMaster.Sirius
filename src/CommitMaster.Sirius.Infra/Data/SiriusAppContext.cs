@@ -11,7 +11,7 @@ namespace CommitMaster.Sirius.Infra.Data
         public DbSet<Assinatura> Assinaturas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
 
-        public SiriusAppContext(DbContextOptions options) : base(options){ }
+        public SiriusAppContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,13 +20,13 @@ namespace CommitMaster.Sirius.Infra.Data
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
                          e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
                 property.SetColumnType("varchar(200)");
-            
+
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
                          .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.SetNull;
 
-            
+
             base.OnModelCreating(modelBuilder);
         }
-    
+
     }
 }
